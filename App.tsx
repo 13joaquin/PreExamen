@@ -1,118 +1,83 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+import { useState } from 'react';
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { FlatList, Pressable, SafeAreaView, StyleSheet, Text } from 'react-native';
+import FomularioE from './src/components/FomularioE';
+import FormularioCT from './src/components/FormularioCT';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+const App = () => {
+  const[modalVisibleEqupo, setModalisibleEquipo] = useState(false);
+  const[modalVisibleCate, setModalisibleCate] = useState(false);
+  const[equipos, setEquipos] = useState([]);
+  const[categorias, setCategorias] = useState([]);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <SafeAreaView style={styles.conteiner}>
+      <Text style={styles.titulo}>
+        Liga Deportiva Guatemala
+      </Text>
+      <Pressable style={styles.botonNuevaCita}
+      onPress={() => setModalisibleEquipo(!modalVisibleEqupo)}>
+        <Text style={styles.btnTextoNuevaCita}>Nuevo Equipo</Text>
+      </Pressable>
+      <Pressable style={styles.botonNuevaCita}
+      onPress={() => setModalisibleCate(!modalVisibleCate)}>
+        <Text style={styles.btnTextoNuevaCita}>Nueva Categoria</Text>
+      </Pressable>
+      <FomularioE 
+      modalVisibleEqupo={modalVisibleEqupo}
+      setModalisibleEquipo={setModalisibleEquipo}
+      equipos={equipos}
+      setEquipos={setEquipos}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <FormularioCT 
+      modalVisibleCate={modalVisibleCate}
+      setModalisibleCate={setModalisibleCate}
+      categorias={categorias}
+      setCategorias={setCategorias}
+      />
     </SafeAreaView>
   );
-}
-
+};
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  conteiner: {
+    backgroundColor: '#f6f7f8',
+    flex: 1,
   },
-  sectionTitle: {
+  titulo: {
+    textAlign: 'center',
+    fontSize: 45,
+    color: '#030303',
+    fontWeight: '600',
+    fontStyle: 'italic'
+  },
+  tituloBold: {
+    fontWeight: '900',
+    color: '#054e9c',
+  },
+  botonNuevaCita:{
+   backgroundColor: '#054e9c',
+   padding: 15,
+   marginTop: 30,
+   marginHorizontal: 20,
+   borderRadius: 10,
+  },
+  btnTextoNuevaCita: {
+   textAlign: 'center',
+   color: '#FFF',
+   fontSize: 18,
+   fontWeight: '900',
+   textTransform: 'uppercase',
+  },
+  noPaciente:{
+    marginTop: 40,
+    textAlign: 'center',
     fontSize: 24,
     fontWeight: '600',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  listado: {
+    marginTop: 50,
+    marginHorizontal: 30,
+  }
 });
-
 export default App;
+
