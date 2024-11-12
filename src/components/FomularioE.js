@@ -1,13 +1,32 @@
 import React, {useState} from 'react';
-import { Modal, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Modal, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import Equipo from './Equipo';
 
 const FomularioE = ({modalVisibleEqupo, setModalisibleEquipo,  equipos, setEquipos}) => {
     const[equipo, setEquipo] = useState('');
-    const[nombre, setNombreEquipo] = useState('');
     const[cantidad, setCantidadEquipo] = useState('');
     const[color, setColorEquipo] = useState('');
     const[engargado, setNombreEncargado] = useState('');
-
+    const handleEquipo = () => {
+      if([equipo, cantidad, color, engargado].includes('')){
+        Alert.alert('Error', 'Todos los campos son Obligatorios');
+        return;
+      }
+      const nuevoequipo = {
+        id: Date.now(),
+        equipo,
+        cantidad,
+        color,
+        engargado
+      }
+      console.log(nuevoequipo);
+      setEquipos([...equipos, nuevoequipo]);
+      setModalisibleEquipo(!modalVisibleEqupo);
+      setEquipo('');
+      setCantidadEquipo('');
+      setColorEquipo('');
+      setNombreEncargado('');
+    };
     
   return (
     <Modal animationType='slide' 
@@ -21,8 +40,50 @@ const FomularioE = ({modalVisibleEqupo, setModalisibleEquipo,  equipos, setEquip
             <Text style={style.btnTextoCancelar}>Cancelar</Text>
           </Pressable>
           <View style={style.campo}>
-
+            <Text style={style.label}>Nombre del Equipo</Text>
+            <TextInput
+              style={style.input}
+              placeholder='Nombre del Equipo'
+              placeholderTextColor={'#666'}
+              value={equipo}
+              onChangeText={setEquipo}
+            />
           </View>
+          <View style={style.campo}>
+            <Text style={style.label}>Cantidad de Jugadores</Text>
+            <TextInput
+              style={style.input}
+              placeholder="Cantidad de Juegadores"
+              placeholderTextColor={'#666'}
+              keyboardType="numeric"
+              value={cantidad}
+              onChangeText={setCantidadEquipo}
+            />
+          </View>
+          <View style={style.campo}>
+            <Text style={style.label}>Color de Equipo</Text>
+            <TextInput
+              style={style.input}
+              placeholder='Color de Equipo'
+              placeholderTextColor={'#666'}
+              value={color}
+              onChangeText={setColorEquipo}
+            />
+          </View>
+          <View style={style.campo}>
+            <Text style={style.label}>Nombre del Encargado</Text>
+            <TextInput
+              style={style.input}
+              placeholder='Nombre del Encargador'
+              placeholderTextColor={'#666'}
+              value={engargado}
+              onChangeText={setNombreEncargado}
+            />
+          </View>
+          <Pressable style={style.btnNueva}
+          onPress={handleEquipo}>
+            <Text style={style.btnNuevoTexto}>Agregar Equipo</Text>
+          </Pressable>
           </ScrollView>
         </SafeAreaView>
         
@@ -32,7 +93,7 @@ const FomularioE = ({modalVisibleEqupo, setModalisibleEquipo,  equipos, setEquip
 };
 const style = StyleSheet.create({
   contenido: {
-    backgroundColor: '#2860d9',
+    backgroundColor: '#f6f7f8',
     flex: 1,
   },
   btnCancelar: {
@@ -54,7 +115,7 @@ const style = StyleSheet.create({
     marginHorizontal: 30,
   },
   label: {
-    color: '#FFF',
+    color: '#030303',
     marginTop: 15,
     fontSize: 20,
     fontWeight: '600',
@@ -67,18 +128,18 @@ const style = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 10,
   },
-  btnCitaNueva: {
+  btnNueva: {
     marginVertical: 50,
     backgroundColor: '#F59E0B',
     paddingVertical: 15,
     marginHorizontal: 30,
     borderRadius: 10,
   },
-  btnNuevaCitaTexto: {
+  btnNuevoTexto: {
     color: '#054e9c',
     textAlign: 'center',
     fontWeight: '900',
-    fontsize: 16,
+    fontsize: 35,
     textTransform: 'uppercase',
   },
 });

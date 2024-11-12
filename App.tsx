@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import React from 'react';
-import { FlatList, Pressable, SafeAreaView, StyleSheet, Text } from 'react-native';
+import { FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet, Text } from 'react-native';
 import FomularioE from './src/components/FomularioE';
 import FormularioCT from './src/components/FormularioCT';
+import Equipo from './src/components/Equipo';
+import Categoria from './src/components/Categoria';
 
 const App = () => {
   const[modalVisibleEqupo, setModalisibleEquipo] = useState(false);
@@ -15,14 +17,46 @@ const App = () => {
       <Text style={styles.titulo}>
         Liga Deportiva Guatemala
       </Text>
-      <Pressable style={styles.botonNuevaCita}
+      <Pressable style={styles.botonNuevo}
       onPress={() => setModalisibleEquipo(!modalVisibleEqupo)}>
-        <Text style={styles.btnTextoNuevaCita}>Nuevo Equipo</Text>
+        <Text style={styles.btnTextoNuevo}>Nuevo Equipo</Text>
       </Pressable>
-      <Pressable style={styles.botonNuevaCita}
+      <Pressable style={styles.botonNuevo}
       onPress={() => setModalisibleCate(!modalVisibleCate)}>
-        <Text style={styles.btnTextoNuevaCita}>Nueva Categoria</Text>
+        <Text style={styles.btnTextoNuevo}>Nueva Categoria</Text>
       </Pressable>
+
+      {equipos.length === 0?(
+        <Text style={styles.Numero}>Noo hay Equipos</Text>
+      ):(
+        <FlatList
+        style={styles.listado}
+        data={equipos}
+        keyExtractor={item => item.id}
+        renderItem={({item})=>{
+          return(
+            <Equipo
+            item = {item}/>
+          )
+        }}
+        />
+      )
+      }
+      {categorias.length === 0?(
+        <Text style={styles.Numero}>Noo hay categorias</Text>
+      ):(
+        <FlatList 
+          style={styles.listado}
+          data={categorias}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => {
+            return(
+              <Categoria
+              item = {item}/>
+            )
+          }}
+        />
+      )}
       <FomularioE 
       modalVisibleEqupo={modalVisibleEqupo}
       setModalisibleEquipo={setModalisibleEquipo}
@@ -35,6 +69,7 @@ const App = () => {
       categorias={categorias}
       setCategorias={setCategorias}
       />
+
     </SafeAreaView>
   );
 };
@@ -54,21 +89,21 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#054e9c',
   },
-  botonNuevaCita:{
+  botonNuevo:{
    backgroundColor: '#054e9c',
    padding: 15,
    marginTop: 30,
    marginHorizontal: 20,
    borderRadius: 10,
   },
-  btnTextoNuevaCita: {
+  btnTextoNuevo: {
    textAlign: 'center',
    color: '#FFF',
    fontSize: 18,
    fontWeight: '900',
    textTransform: 'uppercase',
   },
-  noPaciente:{
+  Numero:{
     marginTop: 40,
     textAlign: 'center',
     fontSize: 24,
