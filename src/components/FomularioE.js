@@ -39,6 +39,7 @@ const FomularioE = ({modalVisibleEqupo, setModalisibleEquipo,  equipos, setEquip
             onPress={() => setModalisibleEquipo(!modalVisibleEqupo)}>
             <Text style={style.btnTextoCancelar}>Cancelar</Text>
           </Pressable>
+          <Text style={style.labeltitle}>Formulario Equipo</Text>
           <View style={style.campo}>
             <Text style={style.label}>Nombre del Equipo</Text>
             <TextInput
@@ -113,6 +114,13 @@ const style = StyleSheet.create({
   campo: {
     marginTop: 10,
     marginHorizontal: 30,
+  },
+  labeltitle:{
+    color: '#030303',
+    marginTop: 15,
+    fontSize: 35,
+    fontWeight: '600',
+    textAlign: 'center',
   },
   label: {
     color: '#030303',
